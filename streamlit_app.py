@@ -15,11 +15,13 @@ df = df[~df["status"].isin(["DECLINED", "CANCELLED"])]
 
 #converte datas
 df["data_pedido"] = pd.to_datetime(df["data_pedido"])
+df["ano"] = df["data_pedido"].dt.year
 df["ano_mes"] = df["data_pedido"].dt.to_period("M").astype(str)
 
-#filtros
-status_opcao = st.multiselect("Filtrar por status do pedido:", df["status"].unique(), default=list(df["status"].unique()))
-df_filtrado = df[df["status"].isin(status_opcao)]
+#filtro por ano
+anos_disponiveis = sorted(df["ano"].unique(), reverse=True)
+ano_selecionado = st.selectbox("Selecione o ano:", anos_disponiveis)
+df_filtrado = df[df["ano"] == ano_selecionado]
 
 #métricas principais
 col1, col2, col3 = st.columns(3)
