@@ -20,7 +20,7 @@ df["ano_mes"] = df["data_pedido"].dt.to_period("M").astype(str)
 
 #filtro por ano
 anos_disponiveis = sorted(df["ano"].unique(), reverse=True)
-ano_selecionado = st.selectbox("Selecione o ano:", anos_disponiveis)
+ano_selecionado = st.multiselect("Selecione o ano:", anos_disponiveis)
 df_filtrado = df[df["ano"] == ano_selecionado]
 
 #métricas principais
